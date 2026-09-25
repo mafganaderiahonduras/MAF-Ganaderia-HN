@@ -758,7 +758,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
   function renderHeader(){
     var g = DATA.global;
     document.getElementById('outcome-text').textContent = DATA.outcome;
-    document.getElementById('gendate').textContent = 'Generado ' + DATA.generated + ' · fuente: Seguimiento proyecto.xlsx (418 filas)';
+    document.getElementById('gendate').textContent = 'Actualizado ' + DATA.generated + ' · fuente: Seguimiento proyecto.xlsx (418 filas)';
     var kpi = document.getElementById('kpi-row');
     kpi.innerHTML =
       kpiHtml({icon:'list', tone:'muted', label:'Tareas nombradas', value:g.count, sub:'tras excluir ' + DATA.rollups_excluded + ' filas resumen (=AVERAGE)', filterKey:'all'}) +

@@ -383,6 +383,71 @@ footer.credit { margin-top:22px; font-size:11.5px; color:var(--muted); text-alig
   *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
 }
 
+/* ---------- kpi cards clicables + panel de detalle ---------- */
+.kpi-clickable { appearance:none; cursor:pointer; text-align:left; width:100%; font-family:inherit; }
+.kpi-clickable[aria-pressed="true"] { border-color:var(--brand); box-shadow:0 0 0 2px var(--brand-tint), var(--shadow); }
+
+.kpi-detail-panel { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 18px 16px; margin:0 0 18px; }
+.kpi-detail-panel[hidden] { display:none; }
+.kpi-detail-head { display:flex; align-items:center; gap:9px; margin-bottom:10px; }
+.kpi-detail-title { font-family:var(--font-head); font-size:14px; font-weight:700; margin:0; flex:1 1 auto; min-width:0; }
+.kpi-detail-count { font-family:var(--font-head); font-size:11px; font-weight:700; color:var(--brand-ink); background:var(--brand-tint); border-radius:20px; padding:2px 9px; flex-shrink:0; }
+.kpi-detail-close { appearance:none; background:none; border:none; cursor:pointer; color:var(--muted); padding:2px; display:flex; flex-shrink:0; border-radius:50%; }
+.kpi-detail-close:hover { color:var(--ink); background:var(--surface-2); }
+.kpi-detail-list { display:flex; flex-direction:column; }
+.kpi-detail-item {
+  display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--line);
+  cursor:pointer; background:none; border-left:none; border-right:none; border-bottom:none;
+  width:100%; text-align:left; font-family:inherit; border-radius:6px;
+}
+.kpi-detail-item:first-child { border-top:none; }
+.kpi-detail-item:hover { background:var(--surface-2); }
+.kpi-detail-item .kdi-name { flex:1 1 auto; min-width:0; font-size:12.4px; color:var(--ink); overflow-wrap:break-word; }
+.kpi-detail-item .kdi-act { color:var(--muted); font-weight:400; }
+.kpi-detail-item .kdi-resp { flex-shrink:0; font-size:10.8px; color:var(--muted); max-width:140px; text-align:right; }
+.kpi-detail-item .kdi-pct { flex-shrink:0; width:36px; text-align:right; font-weight:700; font-size:11.8px; }
+.kpi-detail-more { margin-top:6px; }
+
+/* ---------- toolbar: buscador global + imprimir ---------- */
+.dash-toolbar { display:flex; gap:10px; align-items:flex-start; margin:0 0 18px; flex-wrap:wrap; }
+.global-search { position:relative; flex:1 1 280px; display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 12px; }
+.global-search:focus-within { border-color:var(--brand); }
+.global-search .icon-inline { color:var(--muted); width:15px; height:15px; }
+.global-search input { border:none; outline:none; background:none; font-family:inherit; font-size:12.8px; color:var(--ink); flex:1; min-width:0; }
+.search-results { position:absolute; left:0; right:0; top:calc(100% + 6px); background:var(--surface); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); max-height:340px; overflow-y:auto; z-index:20; padding:6px; }
+.search-results[hidden] { display:none; }
+.search-group-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); padding:8px 8px 3px; }
+.search-result-item { display:flex; align-items:center; gap:9px; padding:7px 8px; border-radius:8px; cursor:pointer; }
+.search-result-item:hover { background:var(--brand-tint); }
+.search-result-item .sr-text { min-width:0; display:flex; flex-direction:column; gap:1px; }
+.search-result-item .sr-label { font-size:12.4px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.search-result-item .sr-sub { font-size:10.5px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.search-empty { padding:14px 8px; font-size:12px; color:var(--muted); text-align:center; }
+.toolbar-btn { display:inline-flex; align-items:center; gap:7px; font-family:inherit; font-size:12.6px; font-weight:600; color:var(--ink-2); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 14px; cursor:pointer; flex-shrink:0; }
+.toolbar-btn:hover { border-color:var(--line-strong); color:var(--ink); }
+.toolbar-btn .icon-inline { width:15px; height:15px; }
+
+/* ---------- scroll-to highlight (search jump targets) ---------- */
+@keyframes flashHighlight { 0%,100% { box-shadow:var(--shadow); } 25% { box-shadow:0 0 0 3px var(--brand), var(--shadow); } }
+.flash-highlight { animation:flashHighlight 1.4s ease; }
+
+/* ---------- sortable indicator table ---------- */
+table.ind-table th.sortable { cursor:pointer; user-select:none; }
+table.ind-table th.sortable:hover { color:var(--ink-2); }
+.sort-arrow { display:inline-block; margin-left:3px; opacity:.4; font-size:9.5px; }
+.sort-arrow.active { opacity:1; color:var(--brand-ink); }
+
+/* ---------- vista de impresión ---------- */
+@media print {
+  body { background:#fff; padding:0; font-size:11.5px; }
+  .wrap { max-width:100%; }
+  .dash-toolbar, .tabs, .filter-row, .person-pills, .task-toggle > summary, .kpi-detail-close { display:none !important; }
+  .output-card, .kpi, .gesi-card, .person-card, .person-output-block {
+    box-shadow:none !important; border:1px solid #ccc !important; transform:none !important; animation:none !important;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+}
+
 /* prevent long unbroken activity/task names and indicator chips from forcing horizontal
    scroll on narrow (phone-width) screens */
 .output-card, .kpi, .gesi-card, .output-head, .comp-main, .pact-main, .stat-mini, .output-head-text, .pill-text, .task-item .t-name { min-width:0; }
@@ -410,6 +475,20 @@ footer.credit { margin-top:22px; font-size:11.5px; color:var(--muted); text-alig
   </header>
 
   <div class="kpi-row" id="kpi-row"></div>
+
+  <div class="kpi-detail-panel" id="kpi-detail-panel" hidden></div>
+
+  <div class="dash-toolbar">
+    <div class="global-search">
+      <span class="icon-inline" id="gs-icon"></span>
+      <input type="search" id="global-search" placeholder="Buscar persona, actividad, indicador o Plan GESI…" autocomplete="off" aria-label="Buscador global">
+      <div class="search-results" id="search-results" hidden></div>
+    </div>
+    <button type="button" id="print-btn" class="toolbar-btn">
+      <span class="icon-inline" id="pb-icon"></span>
+      <span>Imprimir / PDF</span>
+    </button>
+  </div>
 
   <div class="tabs" role="tablist">
     <button type="button" class="tab-btn" data-tab="outputs" role="tab" aria-selected="true">Por Output</button>
@@ -465,7 +544,11 @@ footer.credit { margin-top:22px; font-size:11.5px; color:var(--muted); text-alig
     </div>
     <div class="table-scroll">
       <table class="ind-table">
-        <thead><tr><th>Actividad</th><th>Output</th><th>Indicador(es) vinculado(s)</th></tr></thead>
+        <thead><tr>
+          <th class="sortable" data-sort="actividad">Actividad <span class="sort-arrow" data-arrow="actividad">↕</span></th>
+          <th class="sortable" data-sort="output">Output <span class="sort-arrow" data-arrow="output">↕</span></th>
+          <th class="sortable" data-sort="indicadores">Indicador(es) vinculado(s) <span class="sort-arrow" data-arrow="indicadores">↕</span></th>
+        </tr></thead>
         <tbody id="ind-table-body"></tbody>
       </table>
     </div>
@@ -523,7 +606,9 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     circleHelp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.1.9-1.1 1.7"/><path d="M12 17v.1"/></svg>',
     xCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5"/><path d="M14.5 9.5l-5 5"/></svg>',
     gitBranch: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10"/><path d="M6 12c0-3 3-5 6-5h4"/></svg>',
-    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/></svg>'
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/></svg>',
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>',
+    printIcon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V4h12v5"/><rect x="5" y="9" width="14" height="7" rx="1.5"/><path d="M7 14h10v6H7z"/></svg>'
   };
 
   function iconBadge(key, bg, fg, size, cls){
@@ -541,6 +626,14 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     return String(s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
+  }
+
+  function normalize(s){
+    return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  function slugify(s){
+    return normalize(s).replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
   }
 
   // ---------- motion helpers ----------
@@ -606,6 +699,8 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
   }
 
   // ---------- kpi card builder ----------
+  // opts.filterKey (optional): makes the card a button that opens the matching task list
+  // in the kpi detail panel (see KPI_FILTERS / toggleKpiDetail below).
   function kpiHtml(opts){
     var toneCls = '';
     if (opts.tone === 'good') toneCls = ' good';
@@ -615,11 +710,15 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     var valueHtml = (opts.value === undefined || opts.value === null)
       ? esc(opts.staticValue || '')
       : '<span class="num" data-count-to="' + opts.value + '">0</span>' + (opts.suffix || '');
-    return '<div class="kpi">' +
+    var tag = opts.filterKey ? 'button' : 'div';
+    var openTag = opts.filterKey
+      ? '<button type="button" class="kpi kpi-clickable" data-kpi="' + opts.filterKey + '" aria-pressed="false">'
+      : '<div class="kpi">';
+    return openTag +
       '<div class="kpi-top">' + iconBadge(opts.icon, null, null, 30, 'kpi-icon-badge' + badgeTone) + '<p class="kpi-label">' + esc(opts.label) + '</p></div>' +
       '<div class="kpi-value' + toneCls + '">' + valueHtml + '</div>' +
       '<p class="kpi-sub">' + opts.sub + '</p>' +
-    '</div>';
+    '</' + tag + '>';
   }
 
   function chipHtml(indicators){
@@ -662,12 +761,15 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     document.getElementById('gendate').textContent = 'Generado ' + DATA.generated + ' · fuente: Seguimiento proyecto.xlsx (418 filas)';
     var kpi = document.getElementById('kpi-row');
     kpi.innerHTML =
-      kpiHtml({icon:'list', tone:'muted', label:'Tareas nombradas', value:g.count, sub:'tras excluir ' + DATA.rollups_excluded + ' filas resumen (=AVERAGE)'}) +
-      kpiHtml({icon:'checkCircle', tone:'good', label:'Finalizado', value:g.fin_pct, suffix:'%', sub:g.fin + ' de ' + g.count + ' tareas'}) +
-      kpiHtml({icon:'clock', tone:'good', label:'En tiempo', value:g.ontime_pct, suffix:'%', sub:g.late + ' tareas demoradas'}) +
-      kpiHtml({icon:'alertTriangle', tone:'critical', label:'En demora', value:g.late_pct, suffix:'%', sub:g.late + ' de ' + g.count + ' tareas'}) +
-      kpiHtml({icon:'trendingUp', tone:'brand', label:'Avance promedio', value:g.avg, suffix:'%', sub:'promedio simple, 4 Outputs'});
+      kpiHtml({icon:'list', tone:'muted', label:'Tareas nombradas', value:g.count, sub:'tras excluir ' + DATA.rollups_excluded + ' filas resumen (=AVERAGE)', filterKey:'all'}) +
+      kpiHtml({icon:'checkCircle', tone:'good', label:'Finalizado', value:g.fin_pct, suffix:'%', sub:g.fin + ' de ' + g.count + ' tareas', filterKey:'fin'}) +
+      kpiHtml({icon:'clock', tone:'good', label:'En tiempo', value:g.ontime_pct, suffix:'%', sub:g.late + ' tareas demoradas', filterKey:'ontime'}) +
+      kpiHtml({icon:'alertTriangle', tone:'critical', label:'En demora', value:g.late_pct, suffix:'%', sub:g.late + ' de ' + g.count + ' tareas', filterKey:'late'}) +
+      kpiHtml({icon:'trendingUp', tone:'brand', label:'Avance promedio', value:g.avg, suffix:'%', sub:'promedio simple, 4 Outputs', filterKey:'avg'});
     animateCounts(kpi);
+    kpi.querySelectorAll('.kpi-clickable').forEach(function(btn){
+      btn.addEventListener('click', function(){ toggleKpiDetail(btn.getAttribute('data-kpi'), btn); });
+    });
   }
 
   // ---------- tab: outputs ----------
@@ -698,7 +800,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
           '</div>' + chipHtml(c.indicators) + taskListHtml(c.tasks, true) +
         '</div>';
       }).join('');
-      return '<div class="output-card" style="--oc:' + OC[o.code] + ';--oc-text:' + OCT[o.code] + ';">' +
+      return '<div class="output-card" id="output-card-' + slugify(o.code) + '" style="--oc:' + OC[o.code] + ';--oc-text:' + OCT[o.code] + ';">' +
         '<div class="output-head">' + iconBadge(OUTPUT_ICON_KEY[o.code], OC[o.code], OCT[o.code], 38, 'output-icon-badge') +
           '<div class="output-head-text"><span class="output-chip">' + o.code + '</span><span class="output-title">' + esc(o.title) + '</span></div>' +
         '</div>' +
@@ -799,6 +901,30 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     animateCounts(el);
   }
 
+  var indSort = { col:null, dir:1 };
+
+  function applyIndicatorSort(rows){
+    if (!indSort.col) return rows;
+    var col = indSort.col, dir = indSort.dir;
+    return rows.slice().sort(function(a, b){
+      var av, bv;
+      if (col === 'actividad') { av = a.actividad_es.toLowerCase(); bv = b.actividad_es.toLowerCase(); }
+      else if (col === 'output') { av = a.outputs[0] || 'zzz'; bv = b.outputs[0] || 'zzz'; }
+      else { av = a.indicators.length; bv = b.indicators.length; }
+      if (av < bv) return -1 * dir;
+      if (av > bv) return 1 * dir;
+      return 0;
+    });
+  }
+
+  function updateSortArrows(){
+    document.querySelectorAll('.sort-arrow').forEach(function(el){
+      var col = el.getAttribute('data-arrow');
+      if (col === indSort.col) { el.textContent = indSort.dir === 1 ? '↑' : '↓'; el.classList.add('active'); }
+      else { el.textContent = '↕'; el.classList.remove('active'); }
+    });
+  }
+
   function renderIndicatorTable(){
     var q = document.getElementById('ind-search').value.trim().toLowerCase();
     var outF = document.getElementById('ind-output-filter').value;
@@ -813,6 +939,8 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
       }
       return true;
     });
+    rows = applyIndicatorSort(rows);
+    updateSortArrows();
     var body = rows.map(function(r){
       var outs = r.outputs.map(function(o){ return '<span class="out-tag" style="background:' + OC[o] + ';color:' + OCT[o] + ';">' + o.replace('Output ','O') + '</span>'; }).join('');
       var inds = r.indicators.length ? chipHtml(r.indicators) : '<span style="color:var(--muted); font-size:11.5px;">— sin vínculo identificado</span>';
@@ -828,6 +956,13 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     document.getElementById('ind-search').addEventListener('input', renderIndicatorTable);
     outSel.addEventListener('change', renderIndicatorTable);
     document.getElementById('ind-conf-filter').addEventListener('change', renderIndicatorTable);
+    document.querySelectorAll('th.sortable').forEach(function(th){
+      th.addEventListener('click', function(){
+        var col = th.getAttribute('data-sort');
+        if (indSort.col === col) indSort.dir *= -1; else { indSort.col = col; indSort.dir = 1; }
+        renderIndicatorTable();
+      });
+    });
   }
 
   // ---------- tab: GESI ----------
@@ -879,7 +1014,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
           acts +
         '</div>';
       }).join('');
-      return '<div class="output-card gesi-card" style="--oc:' + oc + ';--oc-text:' + octxt + ';">' +
+      return '<div class="output-card gesi-card" id="gesi-card-' + slugify(p.code) + '" style="--oc:' + oc + ';--oc-text:' + octxt + ';">' +
         '<div class="output-head">' + (axisKey ? iconBadge(axisKey, oc, octxt, 38, 'output-icon-badge') : '') +
           '<div class="output-head-text"><span class="output-chip">' + esc(p.code) + '</span><span class="output-title">' + esc(p.title_es) + '</span></div>' +
         '</div>' +
@@ -899,15 +1034,274 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     });
   }
 
+  function activateTab(key){
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.setAttribute('aria-selected', b.getAttribute('data-tab') === key ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.hidden = true; });
+    var panel = document.getElementById('panel-' + key);
+    if (panel) panel.hidden = false;
+  }
+
   function initTabs(){
-    var btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        btns.forEach(function(b){ b.setAttribute('aria-selected','false'); });
-        btn.setAttribute('aria-selected','true');
-        document.querySelectorAll('.tab-panel').forEach(function(p){ p.hidden = true; });
-        document.getElementById('panel-' + btn.getAttribute('data-tab')).hidden = false;
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ activateTab(btn.getAttribute('data-tab')); });
+    });
+  }
+
+  // ---------- scroll-to + highlight (used by the global search jump targets) ----------
+  function flashHighlight(el, block){
+    if (!el) return;
+    el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: block || 'center' });
+    el.classList.remove('flash-highlight');
+    void el.offsetWidth;
+    el.classList.add('flash-highlight');
+    setTimeout(function(){ el.classList.remove('flash-highlight'); }, 1500);
+  }
+
+  // large cards: scroll so the card's own header (with the highlight ring) lands in view,
+  // instead of centering — which on a tall card can leave the glow off-screen entirely
+  function jumpToOutput(code){
+    activateTab('outputs');
+    requestAnimationFrame(function(){
+      flashHighlight(document.getElementById('output-card-' + slugify(code)), 'start');
+    });
+  }
+
+  function jumpToGesi(code){
+    activateTab('gesi');
+    requestAnimationFrame(function(){
+      flashHighlight(document.getElementById('gesi-card-' + slugify(code)), 'start');
+    });
+  }
+
+  // ---------- panel de detalle por KPI (clic en Tareas nombradas / Finalizado / En tiempo / En demora / Avance promedio) ----------
+  var ALL_TASKS = null;
+  var kpiDetailOpenKey = null;
+
+  function flattenAllTasks(){
+    var list = [];
+    DATA.outputs.forEach(function(o){
+      o.components.forEach(function(c){
+        (c.tasks || []).forEach(function(t){
+          list.push({ tarea:t.tarea, avance:t.avance, estado:t.estado, puntualidad:t.puntualidad, responsable:t.responsable, outputCode:o.code, actividad:c.actividad_es });
+        });
       });
+    });
+    return list;
+  }
+
+  var KPI_FILTERS = {
+    all:    { title:'Todas las tareas nombradas', filter:function(){ return true; } },
+    fin:    { title:'Tareas finalizadas', filter:function(t){ return t.estado === 'Finalizado'; } },
+    ontime: { title:'Tareas en tiempo', filter:function(t){ return t.puntualidad !== 'Demorado'; } },
+    late:   { title:'Tareas en demora', filter:function(t){ return t.puntualidad === 'Demorado'; } },
+    avg:    { title:'Todas las tareas, ordenadas por avance', filter:function(){ return true; }, sort:function(a, b){ return b.avance - a.avance; } }
+  };
+
+  function kpiDetailItemHtml(t){
+    var st = taskState(t);
+    return '<button type="button" class="kpi-detail-item" data-jump-output="' + esc(t.outputCode) + '">' +
+      '<span class="out-tag" style="background:' + OC[t.outputCode] + ';color:' + OCT[t.outputCode] + ';">' + t.outputCode.replace('Output ','O') + '</span>' +
+      '<span class="kdi-name">' + esc(t.tarea) + ' <span class="kdi-act">· ' + esc(t.actividad) + '</span></span>' +
+      '<span class="kdi-resp">' + esc(t.responsable) + '</span>' +
+      '<span class="t-state ' + st.cls + '">' + st.label + '</span>' +
+      '<span class="kdi-pct num">' + Math.round(t.avance) + '%</span>' +
+    '</button>';
+  }
+
+  function renderKpiDetailPanel(key){
+    var panel = document.getElementById('kpi-detail-panel');
+    var cfg = KPI_FILTERS[key];
+    if (!cfg) { panel.hidden = true; panel.innerHTML = ''; return; }
+    if (!ALL_TASKS) ALL_TASKS = flattenAllTasks();
+    var items = ALL_TASKS.filter(cfg.filter);
+    if (cfg.sort) items = items.slice().sort(cfg.sort);
+    var CAP = 40;
+    var top = items.slice(0, CAP);
+    var rest = items.slice(CAP);
+    var restHtml = rest.length
+      ? '<details class="task-toggle kpi-detail-more"><summary>Ver ' + rest.length + ' más</summary>' +
+        '<div class="kpi-detail-list">' + rest.map(kpiDetailItemHtml).join('') + '</div></details>'
+      : '';
+    panel.hidden = false;
+    panel.innerHTML =
+      '<div class="kpi-detail-head">' +
+        '<p class="kpi-detail-title">' + esc(cfg.title) + '</p>' +
+        '<span class="kpi-detail-count">' + items.length + '</span>' +
+        '<button type="button" class="kpi-detail-close" aria-label="Cerrar">' + iconInline('xCircle', 17) + '</button>' +
+      '</div>' +
+      '<div class="kpi-detail-list">' + top.map(kpiDetailItemHtml).join('') + '</div>' +
+      restHtml;
+    panel.querySelectorAll('.kpi-detail-item').forEach(function(btn){
+      btn.addEventListener('click', function(){ jumpToOutput(btn.getAttribute('data-jump-output')); });
+    });
+    panel.querySelector('.kpi-detail-close').addEventListener('click', closeKpiDetail);
+  }
+
+  function closeKpiDetail(){
+    kpiDetailOpenKey = null;
+    document.querySelectorAll('.kpi-clickable').forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+    var panel = document.getElementById('kpi-detail-panel');
+    panel.hidden = true;
+    panel.innerHTML = '';
+  }
+
+  function toggleKpiDetail(key, btn){
+    if (kpiDetailOpenKey === key) { closeKpiDetail(); return; }
+    kpiDetailOpenKey = key;
+    document.querySelectorAll('.kpi-clickable').forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+    renderKpiDetailPanel(key);
+    requestAnimationFrame(function(){ flashHighlight(document.getElementById('kpi-detail-panel'), 'nearest'); });
+  }
+
+  function initKpiDetailClickOutside(){
+    document.addEventListener('click', function(e){
+      if (kpiDetailOpenKey && !e.target.closest('.kpi-detail-panel') && !e.target.closest('.kpi-clickable')) {
+        closeKpiDetail();
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && kpiDetailOpenKey) closeKpiDetail();
+    });
+  }
+
+  // ---------- buscador global ----------
+  var SEARCH_INDEX = [];
+  var SEARCH_TYPE_LABEL = { person:'Personas', output:'Actividades por Output', indicator:'Indicadores', gesi:'Plan GESI' };
+
+  function buildSearchIndex(){
+    var idx = [];
+    DATA.people.forEach(function(p){
+      idx.push({
+        type:'person', icon:'users', label:p.name, sub:(p.role || 'Responsable en el tracker') + ' · ' + p.total + ' tareas',
+        hay: normalize(p.name + ' ' + (p.role || '')),
+        action: function(){
+          activateTab('people');
+          selectPerson(p.pid);
+          requestAnimationFrame(function(){ flashHighlight(document.querySelector('.person-pill[data-pid="' + p.pid + '"]')); });
+        }
+      });
+    });
+    DATA.outputs.forEach(function(o){
+      o.components.forEach(function(c){
+        idx.push({
+          type:'output', icon:OUTPUT_ICON_KEY[o.code], label:c.actividad_es, sub:o.code + ' · ' + o.title,
+          hay: normalize(c.actividad_es + ' ' + o.code + ' ' + o.title),
+          action: (function(code){ return function(){ jumpToOutput(code); }; })(o.code)
+        });
+      });
+    });
+    DATA.indicator_rows.forEach(function(r){
+      var indText = r.indicators.map(function(i){ return i.code + ' ' + i.label; }).join(' ');
+      idx.push({
+        type:'indicator', icon:'barChart', label:r.actividad_es, sub:(r.outputs && r.outputs.length) ? r.outputs.join(', ') : 'Sin Output vinculado',
+        hay: normalize(r.actividad_es + ' ' + indText),
+        action: function(){
+          activateTab('indicators');
+          var s = document.getElementById('ind-search');
+          s.value = r.actividad_es;
+          renderIndicatorTable();
+          requestAnimationFrame(function(){ flashHighlight(document.querySelector('.table-scroll')); });
+        }
+      });
+    });
+    DATA.gesi_pillars.forEach(function(p){
+      p.lines.forEach(function(line){
+        line.activities.forEach(function(a){
+          idx.push({
+            type:'gesi', icon:OUTPUT_ICON_KEY[p.mesa_output] || 'heart', label:a.act, sub:p.code + ' · Línea ' + line.code,
+            hay: normalize(a.act + ' ' + p.title_es + ' ' + line.title_es),
+            action: (function(code){ return function(){ jumpToGesi(code); }; })(p.code)
+          });
+        });
+      });
+    });
+    return idx;
+  }
+
+  function runSearch(q){
+    var nq = normalize(q);
+    if (!nq) return [];
+    var scored = [];
+    SEARCH_INDEX.forEach(function(item, i){
+      var pos = item.hay.indexOf(nq);
+      if (pos !== -1) scored.push({ i:i, pos:pos });
+    });
+    scored.sort(function(a, b){ return a.pos - b.pos; });
+    return scored.slice(0, 8).map(function(s){ return s.i; });
+  }
+
+  function renderSearchResults(indices, q){
+    var box = document.getElementById('search-results');
+    if (!indices.length) {
+      box.innerHTML = q ? '<p class="search-empty">Sin resultados para «' + esc(q) + '»</p>' : '';
+      box.hidden = !q;
+      return;
+    }
+    var lastType = null, html = '';
+    indices.forEach(function(i){
+      var it = SEARCH_INDEX[i];
+      if (it.type !== lastType) {
+        html += '<p class="search-group-label">' + (SEARCH_TYPE_LABEL[it.type] || '') + '</p>';
+        lastType = it.type;
+      }
+      html += '<div class="search-result-item" data-idx="' + i + '">' +
+        iconBadge(it.icon, null, null, 26, 'kpi-icon-badge tone-brand') +
+        '<span class="sr-text"><span class="sr-label">' + esc(it.label) + '</span><span class="sr-sub">' + esc(it.sub) + '</span></span>' +
+      '</div>';
+    });
+    box.innerHTML = html;
+    box.hidden = false;
+    box.querySelectorAll('.search-result-item').forEach(function(el){
+      el.addEventListener('click', function(){
+        var it = SEARCH_INDEX[parseInt(el.getAttribute('data-idx'), 10)];
+        if (it && it.action) it.action();
+        closeSearch();
+      });
+    });
+  }
+
+  function closeSearch(){
+    var box = document.getElementById('search-results');
+    box.hidden = true;
+    box.innerHTML = '';
+  }
+
+  function initGlobalSearch(){
+    document.getElementById('gs-icon').innerHTML = ICONS.search;
+    document.getElementById('pb-icon').innerHTML = ICONS.printIcon;
+    SEARCH_INDEX = buildSearchIndex();
+    var input = document.getElementById('global-search');
+    input.addEventListener('input', function(){
+      var q = input.value.trim();
+      renderSearchResults(runSearch(q), q);
+    });
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { closeSearch(); input.blur(); }
+      if (e.key === 'Enter') {
+        var first = document.querySelector('.search-result-item');
+        if (first) first.click();
+      }
+    });
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('.global-search')) closeSearch();
+    });
+    document.getElementById('print-btn').addEventListener('click', function(){ window.print(); });
+  }
+
+  // ---------- impresión: abre los desplegables de tareas para que salgan en el PDF ----------
+  function initPrintHandlers(){
+    var reopened = [];
+    window.addEventListener('beforeprint', function(){
+      reopened = [];
+      document.querySelectorAll('details.task-toggle').forEach(function(d){
+        if (!d.open) { d.open = true; reopened.push(d); }
+      });
+    });
+    window.addEventListener('afterprint', function(){
+      reopened.forEach(function(d){ d.open = false; });
+      reopened = [];
     });
   }
 
@@ -923,6 +1317,9 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     renderGesi();
     initTabIcons();
     initTabs();
+    initGlobalSearch();
+    initKpiDetailClickOutside();
+    initPrintHandlers();
   }
 
   if (window.claude && window.claude.hot) {

@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tablero MEL Ganadería</title>
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1d7691">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tablero MEL">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root {
   color-scheme: light;
@@ -121,6 +124,7 @@ body {
 h1 { font-family:var(--font-head); font-size: clamp(23px, 3vw, 31px); font-weight:700; margin:0 0 7px; text-wrap:balance; letter-spacing:-0.01em; }
 .outcome { font-size:13.5px; color:var(--ink-2); max-width:64ch; margin:0; }
 .gendate { font-size:12px; color:var(--muted); white-space:nowrap; margin-top:4px; }
+@media (max-width:560px) { .gendate { white-space:normal; text-align:left; } }
 .brand-strip { position:absolute; left:0; right:0; bottom:0; display:flex; height:4px; border-radius:3px; overflow:hidden; gap:2px; }
 .brand-strip span { flex:1; }
 .brand-strip span:nth-child(1) { background:var(--o1); }
@@ -128,11 +132,11 @@ h1 { font-family:var(--font-head); font-size: clamp(23px, 3vw, 31px); font-weigh
 .brand-strip span:nth-child(3) { background:var(--o3); }
 .brand-strip span:nth-child(4) { background:var(--o4); }
 
-.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0 22px; }
-@media (max-width:760px) { .kpi-row { grid-template-columns:repeat(2,1fr); } }
-#kpi-row { grid-template-columns:repeat(5,1fr); }
-@media (max-width:900px) { #kpi-row { grid-template-columns:repeat(3,1fr); } }
-@media (max-width:560px) { #kpi-row { grid-template-columns:repeat(2,1fr); } }
+.kpi-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:20px 0 22px; }
+@media (max-width:760px) { .kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+#kpi-row { grid-template-columns:repeat(5,minmax(0,1fr)); }
+@media (max-width:900px) { #kpi-row { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (max-width:560px) { #kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .kpi { background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--line-strong); border-radius:var(--radius); padding:15px 16px; box-shadow:var(--shadow); }
 .kpi-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.6px; color:var(--muted); margin:0 0 9px; }
 .kpi-value { font-family:var(--font-head); font-size:27px; font-weight:700; letter-spacing:-0.01em; }
@@ -158,8 +162,8 @@ h1 { font-family:var(--font-head); font-size: clamp(23px, 3vw, 31px); font-weigh
 .panel-desc { font-size:12.5px; color:var(--muted); margin:2px 0 0; }
 
 /* ---------- output cards ---------- */
-.output-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-@media (max-width:820px) { .output-grid { grid-template-columns:1fr; } }
+.output-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; }
+@media (max-width:820px) { .output-grid { grid-template-columns:minmax(0,1fr); } }
 .output-card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px 20px 20px; border-top:3px solid var(--oc); }
 .output-head { display:flex; align-items:center; gap:10px; margin-bottom:2px; }
 .output-chip { flex-shrink:0; font-family:var(--font-head); font-size:11.5px; font-weight:700; color:var(--oc-text,#fff); background:var(--oc); border-radius:6px; padding:4px 9px; }
@@ -249,8 +253,8 @@ h1 { font-family:var(--font-head); font-size: clamp(23px, 3vw, 31px); font-weigh
 .pact-n { width:60px; flex-shrink:0; text-align:right; font-size:10.5px; color:var(--muted); }
 
 /* ---------- indicators tab ---------- */
-.ind-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
-@media (max-width:760px) { .ind-summary { grid-template-columns:repeat(2,1fr); } }
+.ind-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:18px; }
+@media (max-width:760px) { .ind-summary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .ind-summary .kpi-value.alta { color: var(--ind); }
 .filter-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
 .filter-row input[type="search"], .filter-row select {
@@ -313,9 +317,84 @@ details.notes .notes-body p:last-child { margin-bottom:0; }
 
 footer.credit { margin-top:22px; font-size:11.5px; color:var(--muted); text-align:center; }
 
+/* ---------- icons, motion & interactive polish ---------- */
+.icon-badge { display:inline-flex; align-items:center; justify-content:center; border-radius:50%; flex-shrink:0; }
+.icon-badge svg { width:56%; height:56%; display:block; }
+.icon-inline { display:inline-flex; vertical-align:-2.5px; flex-shrink:0; }
+.icon-inline svg { width:100%; height:100%; display:block; }
+
+.output-head-text { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.output-head-text .output-chip { align-self:flex-start; }
+.output-icon-badge { box-shadow:0 2px 6px -2px rgba(20,18,10,0.35); }
+
+.tab-btn { display:inline-flex; align-items:center; gap:6px; }
+.tab-btn .icon-inline { width:15px; height:15px; }
+
+.kpi-top { display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+.kpi-top .kpi-label { margin:0; }
+.kpi-icon-badge.tone-good { background:var(--good); color:#fff; }
+.kpi-icon-badge.tone-critical { background:var(--critical); color:#fff; }
+.kpi-icon-badge.tone-brand { background:var(--brand); color:#fff; }
+.kpi-icon-badge.tone-ind { background:var(--ind); color:#fff; }
+.kpi-icon-badge.tone-muted { background:var(--surface-2); color:var(--ink-2); border:1px solid var(--line-strong); }
+.kpi-value.small { font-size:14px; line-height:1.3; }
+
+/* radial progress ring, replaces the plain average number */
+.ring-block { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.ring { position:relative; }
+.ring svg { transform:rotate(-90deg); display:block; }
+.ring-track { fill:none; stroke:var(--surface-2); stroke-width:5; }
+.ring-fill { fill:none; stroke-width:5; stroke-linecap:round; transition:stroke-dashoffset 1s cubic-bezier(.3,0,.2,1); }
+.ring-center { position:absolute; inset:0; display:flex; align-items:baseline; justify-content:center; font-family:var(--font-head); font-weight:700; font-size:15px; }
+.ring-center i { font-style:normal; font-size:10px; margin-left:1px; color:var(--muted); font-weight:600; }
+.ring-label-text { font-size:10px; color:var(--muted); text-align:center; line-height:1.25; margin:5px 0 0; }
+
+/* person avatars (initials, colored by the output each person works on most) */
+.person-pill { display:flex; flex-direction:row; align-items:center; gap:10px; }
+.person-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-weight:700; font-size:11.5px; letter-spacing:.2px; flex-shrink:0; }
+.pill-text { display:flex; flex-direction:column; gap:1px; min-width:0; }
+.primary-axis-tag { display:inline-flex; align-items:center; gap:5px; font-family:var(--font-head); font-size:10.6px; font-weight:700; padding:4px 10px 4px 8px; border-radius:20px; margin:0 0 15px; }
+
+/* hover lift */
+.output-card, .kpi, .gesi-card, .person-card, .person-pill {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.output-card:hover, .kpi:hover, .gesi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px -2px rgba(20,18,10,.14), 0 18px 34px -16px rgba(20,18,10,.28);
+}
+.person-pill:hover { transform: translateY(-2px); border-color:var(--line-strong); }
+.person-pill:focus-visible, .tab-btn:focus-visible, .person-pill:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+
+/* first-view entrance */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.output-card, .gesi-card, .kpi { animation: fadeInUp .5s cubic-bezier(.2,.7,.3,1) both; }
+.output-grid .output-card:nth-child(1), .gesi-grid .gesi-card:nth-child(1) { animation-delay:.02s; }
+.output-grid .output-card:nth-child(2), .gesi-grid .gesi-card:nth-child(2) { animation-delay:.08s; }
+.output-grid .output-card:nth-child(3), .gesi-grid .gesi-card:nth-child(3) { animation-delay:.14s; }
+.output-grid .output-card:nth-child(4), .gesi-grid .gesi-card:nth-child(4) { animation-delay:.2s; }
+.kpi-row .kpi:nth-child(1) { animation-delay:0s; }
+.kpi-row .kpi:nth-child(2) { animation-delay:.04s; }
+.kpi-row .kpi:nth-child(3) { animation-delay:.08s; }
+.kpi-row .kpi:nth-child(4) { animation-delay:.12s; }
+.kpi-row .kpi:nth-child(5) { animation-delay:.16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+
+/* prevent long unbroken activity/task names and indicator chips from forcing horizontal
+   scroll on narrow (phone-width) screens */
+.output-card, .kpi, .gesi-card, .output-head, .comp-main, .pact-main, .stat-mini, .output-head-text, .pill-text, .task-item .t-name { min-width:0; }
+.comp-name, .pact-name, .output-title, .t-name { overflow-wrap:break-word; }
+@media (max-width:480px) {
+  .ind-chip { white-space:normal; }
+  .person-stats { gap:10px; }
+  .person-stats .stat-mini { min-width:0; }
+}
+
 </style>
-</head>
-<body>
+
 <div class="wrap">
   <header class="masthead">
     <div class="brand-row">
@@ -422,11 +501,125 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
   var DATA = window.__DASHBOARD_DATA__;
   var OC = { "Output 1":"var(--o1)", "Output 2":"var(--o2)", "Output 3":"var(--o3)", "Output 4":"var(--o4)" };
   var OCT = { "Output 1":"var(--o1-text)", "Output 2":"var(--o2-text)", "Output 3":"var(--o3-text)", "Output 4":"var(--o4-text)" };
+  var OUTPUT_ICON_KEY = { "Output 1":"cap", "Output 2":"bulb", "Output 3":"institution", "Output 4":"coin" };
+  var TAB_ICON_KEY = { outputs:"grid", people:"users", indicators:"barChart", gesi:"heart" };
+
+  // ---------- icon set (inline SVG, stroke-based, currentColor) ----------
+  var ICONS = {
+    cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.66 2.69 3 6 3s6-1.34 6-3v-5.5"/><path d="M22 8v6"/></svg>',
+    bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6.5 6.5 0 0 0-3.8 11.8c.6.44 1.05 1.1 1.2 1.86l.1.34h5l.1-.34c.15-.75.6-1.42 1.2-1.86A6.5 6.5 0 0 0 12 3Z"/></svg>',
+    institution: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M4 21V10"/><path d="M20 21V10"/><path d="M2 10l10-6 10 6"/><path d="M8 21v-7"/><path d="M12 21v-7"/><path d="M16 21v-7"/></svg>',
+    coin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.6c0-1.1 1.2-1.9 2.8-1.9s2.8.8 2.8 1.7c0 2.4-5.6 1.1-5.6 3.5 0 .9 1.2 1.7 2.8 1.7s2.8-.8 2.8-1.9"/><path d="M12 6.3v1.1"/><path d="M12 16.6v1.1"/></svg>',
+    grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.7 14.3c2.9.4 5.3 2.8 5.3 5.7"/></svg>',
+    barChart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/><path d="M2 20h20"/></svg>',
+    heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-9.5-9.2C1.2 8.1 3 5 6.2 5c1.9 0 3.3 1 4.3 2.4L12 9l1.5-1.6C14.5 6 15.9 5 17.8 5 21 5 22.8 8.1 21.5 11.3 19.5 15.9 12 20.5 12 20.5Z"/></svg>',
+    list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4.5 6l.6.6L6.5 5"/><path d="M4.5 12l.6.6 1.4-1.6"/><path d="M4.5 18l.6.6 1.4-1.6"/></svg>',
+    checkCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
+    alertTriangle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 22 20.5H2Z"/><path d="M12 9.5v5"/><path d="M12 17.7v.1"/></svg>',
+    trendingUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/><path d="M15 6h6v6"/></svg>',
+    layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M2 13l10 5 10-5"/></svg>',
+    circleHelp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.1.9-1.1 1.7"/><path d="M12 17v.1"/></svg>',
+    xCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5"/><path d="M14.5 9.5l-5 5"/></svg>',
+    gitBranch: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10"/><path d="M6 12c0-3 3-5 6-5h4"/></svg>',
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/></svg>'
+  };
+
+  function iconBadge(key, bg, fg, size, cls){
+    size = size || 34;
+    var style = 'width:' + size + 'px;height:' + size + 'px;' + (bg ? ('background:' + bg + ';') : '') + (fg ? ('color:' + fg + ';') : '');
+    return '<span class="icon-badge ' + (cls || '') + '" style="' + style + '">' + (ICONS[key] || '') + '</span>';
+  }
+
+  function iconInline(key, size){
+    size = size || 14;
+    return '<span class="icon-inline" style="width:' + size + 'px;height:' + size + 'px;">' + (ICONS[key] || '') + '</span>';
+  }
 
   function esc(s){
     return String(s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
+  }
+
+  // ---------- motion helpers ----------
+  function prefersReducedMotion(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function activateRings(root){
+    if (!root) return;
+    var circles = root.querySelectorAll('.ring-fill[data-target-offset]');
+    if (!circles.length) return;
+    if (prefersReducedMotion()){
+      circles.forEach(function(c){ c.style.transition = 'none'; c.style.strokeDashoffset = c.getAttribute('data-target-offset'); });
+      return;
+    }
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        circles.forEach(function(c){ c.style.strokeDashoffset = c.getAttribute('data-target-offset'); });
+      });
+    });
+  }
+
+  function animateCounts(root){
+    if (!root) return;
+    var els = root.querySelectorAll('[data-count-to]');
+    if (!els.length) return;
+    if (prefersReducedMotion()){
+      els.forEach(function(el){ el.textContent = el.getAttribute('data-count-to'); });
+      return;
+    }
+    els.forEach(function(el){
+      var raw = el.getAttribute('data-count-to');
+      var target = parseFloat(raw);
+      if (isNaN(target)) { el.textContent = raw; return; }
+      var decimals = (raw.split('.')[1] || '').length;
+      var dur = 850, start = null;
+      function step(ts){
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(decimals);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ---------- ring (animated radial progress) ----------
+  function ringHtml(pct, colorVar, size){
+    size = size || 64;
+    var r = size / 2 - 5.5;
+    var c = 2 * Math.PI * r;
+    var clamped = Math.max(0, Math.min(100, Number(pct) || 0));
+    var off = (c * (1 - clamped / 100)).toFixed(2);
+    return '<div class="ring" style="width:' + size + 'px;height:' + size + 'px;">' +
+      '<svg viewBox="0 0 ' + size + ' ' + size + '" width="' + size + '" height="' + size + '">' +
+        '<circle class="ring-track" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r.toFixed(2) + '"></circle>' +
+        '<circle class="ring-fill" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r.toFixed(2) + '" style="stroke:' + colorVar + '; stroke-dasharray:' + c.toFixed(2) + 'px; stroke-dashoffset:' + c.toFixed(2) + 'px;" data-target-offset="' + off + 'px"></circle>' +
+      '</svg>' +
+      '<div class="ring-center"><span class="num" data-count-to="' + Math.round(clamped) + '">0</span><i>%</i></div>' +
+    '</div>';
+  }
+
+  // ---------- kpi card builder ----------
+  function kpiHtml(opts){
+    var toneCls = '';
+    if (opts.tone === 'good') toneCls = ' good';
+    else if (opts.tone === 'critical') toneCls = ' critical';
+    if (opts.valueClass) toneCls += ' ' + opts.valueClass;
+    var badgeTone = ' tone-' + (opts.tone || 'brand');
+    var valueHtml = (opts.value === undefined || opts.value === null)
+      ? esc(opts.staticValue || '')
+      : '<span class="num" data-count-to="' + opts.value + '">0</span>' + (opts.suffix || '');
+    return '<div class="kpi">' +
+      '<div class="kpi-top">' + iconBadge(opts.icon, null, null, 30, 'kpi-icon-badge' + badgeTone) + '<p class="kpi-label">' + esc(opts.label) + '</p></div>' +
+      '<div class="kpi-value' + toneCls + '">' + valueHtml + '</div>' +
+      '<p class="kpi-sub">' + opts.sub + '</p>' +
+    '</div>';
   }
 
   function chipHtml(indicators){
@@ -469,15 +662,17 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     document.getElementById('gendate').textContent = 'Generado ' + DATA.generated + ' · fuente: Seguimiento proyecto.xlsx (418 filas)';
     var kpi = document.getElementById('kpi-row');
     kpi.innerHTML =
-      '<div class="kpi"><p class="kpi-label">Tareas nombradas</p><div class="kpi-value num">' + g.count + '</div><p class="kpi-sub">tras excluir ' + DATA.rollups_excluded + ' filas resumen (=AVERAGE)</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Finalizado</p><div class="kpi-value num good">' + g.fin_pct + '%</div><p class="kpi-sub">' + g.fin + ' de ' + g.count + ' tareas</p></div>' +
-      '<div class="kpi"><p class="kpi-label">En tiempo</p><div class="kpi-value num good">' + g.ontime_pct + '%</div><p class="kpi-sub">' + g.late + ' tareas demoradas</p></div>' +
-      '<div class="kpi"><p class="kpi-label">En demora</p><div class="kpi-value num critical">' + g.late_pct + '%</div><p class="kpi-sub">' + g.late + ' de ' + g.count + ' tareas</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Avance promedio</p><div class="kpi-value num">' + g.avg + '%</div><p class="kpi-sub">promedio simple, 4 Outputs</p></div>';
+      kpiHtml({icon:'list', tone:'muted', label:'Tareas nombradas', value:g.count, sub:'tras excluir ' + DATA.rollups_excluded + ' filas resumen (=AVERAGE)'}) +
+      kpiHtml({icon:'checkCircle', tone:'good', label:'Finalizado', value:g.fin_pct, suffix:'%', sub:g.fin + ' de ' + g.count + ' tareas'}) +
+      kpiHtml({icon:'clock', tone:'good', label:'En tiempo', value:g.ontime_pct, suffix:'%', sub:g.late + ' tareas demoradas'}) +
+      kpiHtml({icon:'alertTriangle', tone:'critical', label:'En demora', value:g.late_pct, suffix:'%', sub:g.late + ' de ' + g.count + ' tareas'}) +
+      kpiHtml({icon:'trendingUp', tone:'brand', label:'Avance promedio', value:g.avg, suffix:'%', sub:'promedio simple, 4 Outputs'});
+    animateCounts(kpi);
   }
 
   // ---------- tab: outputs ----------
-  function statMiniRow(stats){
+  function statMiniRow(stats, ringColor){
+    ringColor = ringColor || 'var(--brand)';
     return '<div class="stat-mini-row">' +
       '<div class="stat-mini"><p class="stat-mini-label">Estado</p>' +
         '<div class="stackbar"><div class="seg" style="width:' + stats.fin_pct + '%; background:var(--good);"><span>' + Math.round(stats.fin_pct) + '%</span></div><div class="seg" style="width:' + (100-stats.fin_pct) + '%; background:var(--line-strong);"></div></div>' +
@@ -487,7 +682,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
         '<div class="stackbar"><div class="seg" style="width:' + stats.ontime_pct + '%; background:var(--good);"><span>' + Math.round(stats.ontime_pct) + '%</span></div><div class="seg" style="width:' + (100-stats.ontime_pct) + '%; background:var(--critical);"></div></div>' +
         '<div class="stat-legend"><span><b>En tiempo</b> ' + stats.ontime + '/' + stats.count + '</span><span>Demorado ' + stats.late + '</span></div>' +
       '</div>' +
-      '<div class="avg-mini"><div class="v num">' + stats.avg + '%</div><div class="l">avance<br>promedio</div></div>' +
+      '<div class="ring-block">' + ringHtml(stats.avg, ringColor, 64) + '<p class="ring-label-text">avance<br>promedio</p></div>' +
     '</div>';
   }
 
@@ -504,23 +699,47 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
         '</div>';
       }).join('');
       return '<div class="output-card" style="--oc:' + OC[o.code] + ';--oc-text:' + OCT[o.code] + ';">' +
-        '<div class="output-head"><span class="output-chip">' + o.code + '</span><span class="output-title">' + esc(o.title) + '</span></div>' +
+        '<div class="output-head">' + iconBadge(OUTPUT_ICON_KEY[o.code], OC[o.code], OCT[o.code], 38, 'output-icon-badge') +
+          '<div class="output-head-text"><span class="output-chip">' + o.code + '</span><span class="output-title">' + esc(o.title) + '</span></div>' +
+        '</div>' +
         '<p class="output-meta">' + o.stats.count + ' tareas' + (o.sin_responsable? ' · ' + o.sin_responsable + ' sin responsable asignado' : '') + '</p>' +
-        statMiniRow(o.stats) +
+        statMiniRow(o.stats, OC[o.code]) +
         '<div class="comp-list">' + comps + '</div>' +
       '</div>';
     }).join('');
+    activateRings(grid);
+    animateCounts(grid);
   }
 
   // ---------- tab: people ----------
   var selectedPid = null;
+
+  function initials(name){
+    var parts = String(name).replace(/\(.*?\)/g, '').trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+
+  function primaryOutput(p){
+    if (!p.outputs || !p.outputs.length) return null;
+    return p.outputs.reduce(function(a, b){ return (b.count || 0) > (a.count || 0) ? b : a; });
+  }
+
   function renderPersonPills(){
     var el = document.getElementById('person-pills');
     el.innerHTML = DATA.people.map(function(p){
+      var po = primaryOutput(p);
+      var bg = po ? OC[po.code] : 'var(--brand)';
+      var fg = po ? OCT[po.code] : '#fff';
+      var title = po ? (esc(po.code) + ': ' + esc(po.title)) : '';
       return '<button type="button" class="person-pill" data-pid="' + p.pid + '" aria-pressed="false">' +
-        '<span class="role">' + esc(p.role || 'Responsable en el tracker') + '</span>' +
-        '<b>' + esc(p.name) + '</b>' +
-        '<span class="n">' + p.total + ' tareas · ' + p.avg + '% avance</span>' +
+        '<span class="person-avatar" style="background:' + bg + ';color:' + fg + ';" title="' + title + '">' + esc(initials(p.name)) + '</span>' +
+        '<span class="pill-text">' +
+          '<span class="role">' + esc(p.role || 'Responsable en el tracker') + '</span>' +
+          '<b>' + esc(p.name) + '</b>' +
+          '<span class="n">' + p.total + ' tareas · ' + p.avg + '% avance</span>' +
+        '</span>' +
       '</button>';
     }).join('');
     el.querySelectorAll('.person-pill').forEach(function(btn){
@@ -536,6 +755,8 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     var p = DATA.people.find(function(x){ return x.pid === pid; });
     var el = document.getElementById('person-detail');
     if (!p) { el.innerHTML = ''; return; }
+    var po = primaryOutput(p);
+    var primaryTag = po ? '<span class="primary-axis-tag" style="background:' + OC[po.code] + ';color:' + OCT[po.code] + ';">' + iconInline(OUTPUT_ICON_KEY[po.code], 13) + ' Eje principal: ' + esc(po.code) + '</span>' : '';
     var blocks = p.outputs.map(function(ob){
       var acts = ob.activities.map(function(a){
         return '<div class="pact-row">' +
@@ -547,7 +768,9 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
         '</div>';
       }).join('');
       return '<div class="person-output-block" style="--oc:' + OC[ob.code] + ';--oc-text:' + OCT[ob.code] + ';">' +
-        '<div class="person-output-head"><span class="output-chip">' + ob.code + '</span><span class="output-title">' + esc(ob.title) + '</span></div>' +
+        '<div class="person-output-head">' + iconBadge(OUTPUT_ICON_KEY[ob.code], OC[ob.code], OCT[ob.code], 30, 'output-icon-badge') +
+          '<div class="output-head-text"><span class="output-chip">' + ob.code + '</span><span class="output-title">' + esc(ob.title) + '</span></div>' +
+        '</div>' +
         '<p class="person-output-meta">' + ob.count + ' tareas en este Output · avance promedio ' + ob.avg + '%</p>' +
         '<div class="pact-panel">' + acts + '</div>' +
       '</div>';
@@ -556,19 +779,24 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
       '<div class="person-card">' +
         '<h3 class="person-name">' + esc(p.role || 'Responsable en el tracker de seguimiento') + '</h3>' +
         '<p class="person-role">' + esc(p.name) + ' · ' + p.total + ' tareas en ' + p.outputs.length + ' Output(s)' + (p.shared_any ? ' · algunas tareas compartidas con otra persona' : '') + '</p>' +
-        '<div class="person-stats">' + statMiniRow({fin_pct:100*p.fin/p.total, ontime_pct:100*p.ontime/p.total, fin:p.fin, proc:p.proc, ontime:p.ontime, late:p.late, count:p.total, avg:p.avg}) + '</div>' +
+        primaryTag +
+        '<div class="person-stats">' + statMiniRow({fin_pct:100*p.fin/p.total, ontime_pct:100*p.ontime/p.total, fin:p.fin, proc:p.proc, ontime:p.ontime, late:p.late, count:p.total, avg:p.avg}, 'var(--brand)') + '</div>' +
         blocks +
       '</div>';
+    activateRings(el);
+    animateCounts(el);
   }
 
   // ---------- tab: indicators ----------
   function renderIndicatorSummary(){
     var s = DATA.indicator_summary;
-    document.getElementById('ind-summary').innerHTML =
-      '<div class="kpi"><p class="kpi-label">Actividades distintas</p><div class="kpi-value num">' + s.total_actividades + '</div><p class="kpi-sub">del tracker de seguimiento</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Alta confianza</p><div class="kpi-value num alta">' + s.alta + '</div><p class="kpi-sub">vínculo claro con la matriz</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Confianza media</p><div class="kpi-value num">' + s.media + '</div><p class="kpi-sub">coincidencia temática razonable</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Sin vínculo</p><div class="kpi-value num">' + s.ninguna + '</div><p class="kpi-sub">' + s.codigos_distintos + ' códigos de indicador usados</p></div>';
+    var el = document.getElementById('ind-summary');
+    el.innerHTML =
+      kpiHtml({icon:'layers', tone:'brand', label:'Actividades distintas', value:s.total_actividades, sub:'del tracker de seguimiento'}) +
+      kpiHtml({icon:'checkCircle', tone:'ind', valueClass:'alta', label:'Alta confianza', value:s.alta, sub:'vínculo claro con la matriz'}) +
+      kpiHtml({icon:'circleHelp', tone:'muted', label:'Confianza media', value:s.media, sub:'coincidencia temática razonable'}) +
+      kpiHtml({icon:'xCircle', tone:'muted', label:'Sin vínculo', value:s.ninguna, sub:s.codigos_distintos + ' códigos de indicador usados'});
+    animateCounts(el);
   }
 
   function renderIndicatorTable(){
@@ -605,11 +833,13 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
   // ---------- tab: GESI ----------
   function renderGesiSummary(){
     var m = DATA.gesi_meta;
-    document.getElementById('gesi-summary').innerHTML =
-      '<div class="kpi"><p class="kpi-label">Pilares de acción</p><div class="kpi-value num">' + m.total_pilares + '</div><p class="kpi-sub">uno por Output/mesa</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Líneas estratégicas</p><div class="kpi-value num">' + m.total_lineas + '</div><p class="kpi-sub">dentro de los 4 pilares</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Actividades GESI</p><div class="kpi-value num">' + m.total_actividades + '</div><p class="kpi-sub">extraídas del Plan de Acción</p></div>' +
-      '<div class="kpi"><p class="kpi-label">Estado real</p><div class="kpi-value num" style="font-size:14px; line-height:1.3;">Pendiente</div><p class="kpi-sub">se registra en el taller (Día 3)</p></div>';
+    var el = document.getElementById('gesi-summary');
+    el.innerHTML =
+      kpiHtml({icon:'flag', tone:'brand', label:'Pilares de acción', value:m.total_pilares, sub:'uno por Output/mesa'}) +
+      kpiHtml({icon:'gitBranch', tone:'brand', label:'Líneas estratégicas', value:m.total_lineas, sub:'dentro de los 4 pilares'}) +
+      kpiHtml({icon:'list', tone:'brand', label:'Actividades GESI', value:m.total_actividades, sub:'extraídas del Plan de Acción'}) +
+      kpiHtml({icon:'clock', tone:'muted', valueClass:'small', label:'Estado real', staticValue:'Pendiente', sub:'se registra en el taller (Día 3)'});
+    animateCounts(el);
   }
 
   function renderGesi(){
@@ -617,6 +847,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     grid.innerHTML = DATA.gesi_pillars.map(function(p){
       var oc = OC[p.mesa_output] || 'var(--ind)';
       var octxt = OCT[p.mesa_output] || '#fff';
+      var axisKey = OUTPUT_ICON_KEY[p.mesa_output];
       var lines = p.lines.map(function(line){
         var acts = line.activities.map(function(a){
           var equipoHtml = '';
@@ -649,7 +880,9 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
         '</div>';
       }).join('');
       return '<div class="output-card gesi-card" style="--oc:' + oc + ';--oc-text:' + octxt + ';">' +
-        '<div class="output-head"><span class="output-chip">' + esc(p.code) + '</span><span class="output-title">' + esc(p.title_es) + '</span></div>' +
+        '<div class="output-head">' + (axisKey ? iconBadge(axisKey, oc, octxt, 38, 'output-icon-badge') : '') +
+          '<div class="output-head-text"><span class="output-chip">' + esc(p.code) + '</span><span class="output-title">' + esc(p.title_es) + '</span></div>' +
+        '</div>' +
         '<p class="output-meta">Mesa ' + esc(p.mesa_output) + ' · ' + esc(p.outcome_es) + '</p>' +
         lines +
       '</div>';
@@ -657,6 +890,15 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
   }
 
   // ---------- tabs ----------
+  function initTabIcons(){
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+      var key = TAB_ICON_KEY[btn.getAttribute('data-tab')];
+      if (key && !btn.querySelector('.icon-inline')) {
+        btn.insertAdjacentHTML('afterbegin', iconInline(key, 15));
+      }
+    });
+  }
+
   function initTabs(){
     var btns = document.querySelectorAll('.tab-btn');
     btns.forEach(function(btn){
@@ -679,6 +921,7 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
     renderIndicatorTable();
     renderGesiSummary();
     renderGesi();
+    initTabIcons();
     initTabs();
   }
 
@@ -690,6 +933,3 @@ window.__DASHBOARD_DATA__ = {"outcome": "Outcome 1: El sector ganadero de Hondur
 })();
 
 </script>
-
-</body>
-</html>
